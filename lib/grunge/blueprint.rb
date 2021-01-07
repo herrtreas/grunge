@@ -6,11 +6,25 @@ module Grunge
     end
 
     def build
-      bp = { contexts: [] }
+      bp = { 
+        acts: [],
+        contexts: []
+      }
+
+      @plan.acts.each do |act|
+        bp[:acts] << {
+          name: act.name,
+          method: act.method,
+          path: act.path,
+          expects: act.expects
+        }
+      end
 
       @plan.contexts.each do |context|
         c = { 
           name: context.name,
+
+          acts: [],
           scenes: []
         }
 
@@ -22,7 +36,9 @@ module Grunge
 
           scene.acts.each do |act|
             s[:acts] << {
-              name: act.name
+              name: act.name,
+              method: act.x_method,
+              path: act.x_path
             }
           end
 

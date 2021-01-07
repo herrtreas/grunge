@@ -2,23 +2,26 @@ module Grunge
   module Blocks
     class Act
 
-      attr_accessor :name
+      attr_reader :name
+      attr_reader :expects
 
       def initialize(name)
         @name = name
-        puts "Act: #{name}"
       end
 
-      def method(m)
-        puts "ACT: METHOD: #{m}"
+      def method(m = nil)
+        return @method unless m
+        @method = m.upcase
       end
 
-      def path(p)
-        puts "ACT: Path: #{p}"
+      def path(p = nil)
+        return @path unless p
+        @path = p
       end
 
-      def expect(s)
-        puts "ACT: Expect: #{s}"
+      def expect(e = {})
+        @expects ||= []
+        @expects << e
       end
 
     end

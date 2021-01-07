@@ -3,11 +3,20 @@ module Grunge
     class Context
 
       attr_reader :name
+
+      attr_reader :acts
       attr_reader :scenes
 
       def initialize(name)
         @name = name
+        @acts = []
         @scenes = []
+      end
+
+      def act(name, &block)
+        act = Act.new(name)
+        act.instance_exec(&block)
+        @acts << act
       end
 
       def scene(name, &block)

@@ -1,5 +1,6 @@
 require "grunge/blocks"
 require "grunge/blueprint"
+require "grunge/recorder"
 require "grunge/cli"
 require "grunge/version"
 
@@ -11,7 +12,17 @@ module Grunge
     plan.instance_exec(&block)
 
     bp = Blueprint.new(plan)
-    pp bp.build
+    spec = bp.build
+
+    puts "\n:: Blueprint -->\n\n"
+    pp spec
+
+    rec = Grunge::Recorder::Postman.record(spec)
+    puts rec
+
+    File.open("rec.json", "w") do |f|
+      f << rec
+    end
   end
 
 end
